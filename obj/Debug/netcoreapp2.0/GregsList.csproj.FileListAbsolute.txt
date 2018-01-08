@@ -1,0 +1,10 @@
+c:\source\codeworks\csharp\GregsList\bin\Debug\netcoreapp2.0\GregsList.deps.json
+c:\source\codeworks\csharp\GregsList\bin\Debug\netcoreapp2.0\GregsList.runtimeconfig.json
+c:\source\codeworks\csharp\GregsList\bin\Debug\netcoreapp2.0\GregsList.runtimeconfig.dev.json
+c:\source\codeworks\csharp\GregsList\bin\Debug\netcoreapp2.0\GregsList.dll
+c:\source\codeworks\csharp\GregsList\bin\Debug\netcoreapp2.0\GregsList.pdb
+c:\source\codeworks\csharp\GregsList\obj\Debug\netcoreapp2.0\GregsList.csproj.CoreCompileInputs.cache
+c:\source\codeworks\csharp\GregsList\obj\Debug\netcoreapp2.0\GregsList.AssemblyInfoInputs.cache
+c:\source\codeworks\csharp\GregsList\obj\Debug\netcoreapp2.0\GregsList.AssemblyInfo.cs
+c:\source\codeworks\csharp\GregsList\obj\Debug\netcoreapp2.0\GregsList.dll
+c:\source\codeworks\csharp\GregsList\obj\Debug\netcoreapp2.0\GregsList.pdb
