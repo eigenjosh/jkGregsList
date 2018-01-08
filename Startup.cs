@@ -33,6 +33,7 @@ namespace GregsList
             services.AddTransient<AnimalRepository>();
             services.AddTransient<AutoRepository>();
             services.AddTransient<PropertyRepository>();
+            services.AddTransient<UserRepository>();
 
         }
 

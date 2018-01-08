@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GregsList.Models;
+using GregsList.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GregsList.Controllers
