@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using GregsList.Models;
 using GregsList.Repositories;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GregsList.Controllers
@@ -13,6 +12,7 @@ namespace GregsList.Controllers
     public class AccountController : Controller
     {
         private readonly UserRepository _db;
+
         public AccountController(UserRepository repo)
         {
             _db = repo;
@@ -23,34 +23,39 @@ namespace GregsList.Controllers
         {
             if (ModelState.IsValid)
             {
-                UserReturnModel user = db.Register(creds);
-                if(user != null)
+                UserReturnModel user = _db.Register(creds);
+                if (user != null)
                 {
-                    var claims = new List<Claim> {}
+                    var claims = new List<Claim> { new Claim(ClaimTypes.Email, user.Email) };
+                    var userIdentity = new ClaimsIdentity(claims, "login");
+                    ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                    await HttpContext.SignInAsync(principal);
+                    return user;
                 }
-                return _db.Register(creds);
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
         [HttpPost("login")]
         public async Task<UserReturnModel> Login([FromBody]LoginUserModel creds)
         {
             if (ModelState.IsValid)
             {
-                UserReturnModel user = db.Login(creds);
+                UserReturnModel user = _db.Login(creds);
                 if (user != null)
                 {
                     var claims = new List<Claim> { new Claim(ClaimTypes.Email, user.Email) };
-                    {
-                new Claim(ClaimTypes.Email, user.Email)
-            };
-                    return _db.Login(creds);
+                    var userIdentity = new ClaimsIdentity(claims, "login");
+                    ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                    await HttpContext.SignInAsync(principal);
+                    return user;
                 }
-                return null;
             }
+            return null;
         }
+        // [HttpGet("authenticate")]
+        // public async Task<UserReturnModel> Authenticate()
+        // {
+
+        // }
     }
 }

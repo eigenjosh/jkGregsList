@@ -6,7 +6,6 @@ namespace GregsList.Repositories
     {
         protected readonly IDbConnection _db;
 
-        //
         public DbContext(IDbConnection db)
         {
             _db = db;

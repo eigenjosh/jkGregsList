@@ -1,6 +1,6 @@
 using System.Data;
-using Dapper;
 using GregsList.Models;
+using Dapper;
 using MySql.Data.MySqlClient;
 
 namespace GregsList.Repositories
@@ -10,36 +10,43 @@ namespace GregsList.Repositories
         public UserRepository(IDbConnection db) : base(db)
         {
         }
+
         public UserReturnModel Register(RegisterUserModel creds)
         {
-            //encrypt password
+            // encrypt the password??
             creds.Password = BCrypt.Net.BCrypt.HashPassword(creds.Password);
-            //sql here
-            int id = _db.ExecuteScalar<int>(@"
-            INSERT INTO users (Username, Email, Password)
-            VALUES  (@Username, @Email, @Password)
-            SELECT LAST_INSERT_ID();
-            ", creds);
-            return new UserReturnModel()
+            //sql
+            try
             {
-                Id = id,
-                Username = creds.Username,
-                Email = creds.Email
-            };
 
+                int id = _db.ExecuteScalar<int>(@"
+                INSERT INTO users (Username, Email, Password)
+                VALUES (@Username, @Email, @Password);
+                SELECT LAST_INSERT_ID();
+            ", creds);
 
+                return new UserReturnModel()
+                {
+                    Id = id,
+                    Username = creds.Username,
+                    Email = creds.Email
+                };
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine("ERROR: " + e.Message);
+                return null;
+            }
         }
 
         public UserReturnModel Login(LoginUserModel creds)
         {
-
-            //more sql
+            // more sql
             User user = _db.QueryFirstOrDefault<User>(@"
-            SELECT * FROM users WHERE email = @Email OR username = @Username
+                SELECT * FROM users WHERE email = @Email
             ", creds);
             if (user != null)
             {
-
                 var valid = BCrypt.Net.BCrypt.Verify(creds.Password, user.Password);
                 if (valid)
                 {
@@ -50,12 +57,9 @@ namespace GregsList.Repositories
                         Email = user.Email
                     };
                 }
-                    catch (MySqlException e)
-                {
-                    System.Console.WriteLine("ERROR: " + e.Message);
-                    return null;
-                }
             }
+            return null;
         }
+
     }
 }
