@@ -20,18 +20,18 @@ namespace GregsList.Repositories
         // Find One Find Many add update delete
         public IEnumerable<Auto> GetAll()
         {
-            return _db.Query<Auto>("SELECT * FROM Autos");
+            return _db.Query<Auto>("SELECT * FROM jkautos");
         }
 
         public Auto GetById(int id)
         {
-            return _db.QueryFirstOrDefault<Auto>($"SELECT * FROM Autos WHERE id = @id", id);
+            return _db.QueryFirstOrDefault<Auto>($"SELECT * FROM jkautos WHERE id = {id}", id);
         }
 
         public Auto Add(Auto auto)
         {
 
-            int id = _db.ExecuteScalar<int>("INSERT INTO Autos (Name, Description, Price)"
+            int id = _db.ExecuteScalar<int>("INSERT INTO jkautos (Name, Description, Price)"
                         + " VALUES(@Name, @Description, @Price); SELECT LAST_INSERT_ID()", new
                         {
                             auto.Name,
@@ -46,18 +46,18 @@ namespace GregsList.Repositories
         public Auto GetOneByIdAndUpdate(int id, Auto auto)
         {
             return _db.QueryFirstOrDefault<Auto>($@"
-                UPDATE Autos SET  
+                UPDATE jkautos SET  
                     Name = @Name,
                     Description = @Description,
                     Price = @Price
                 WHERE Id = {id};
-                SELECT * FROM Autos WHERE id = {id};", auto);
+                SELECT * FROM jkautos WHERE id = {id};", auto);
         }
 
         public string FindByIdAndRemove(int id)
         {
             var success = _db.Execute(@"
-                DELETE FROM Autos WHERE Id = @id
+                DELETE FROM jkautos WHERE Id = {id}
             ", id);
             return success > 0 ? "success" : "umm that didnt work";
         }

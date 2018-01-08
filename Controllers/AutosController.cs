@@ -9,42 +9,42 @@ using Microsoft.AspNetCore.Mvc;
 namespace GregsList.Controllers
 {
     [Route("api/[controller]")]
-    public class AnimalsController : Controller
+    public class AutosController : Controller
     {
-        private readonly AnimalRepository db;
-        public AnimalsController(AnimalRepository animalRepo)
+        private readonly AutoRepository db;
+        public AutosController(AutoRepository autoRepo)
         {
-            db = animalRepo;
+            db = autoRepo;
         }
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<Animal> Get()
+        public IEnumerable<Auto> Get()
         {
             return db.GetAll();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Animal Get(int id)
+        public Auto Get(int id)
         {
             return db.GetById(id);
         }
 
         // POST api/values
         [HttpPost]
-        public Animal Post([FromBody]Animal animal)
+        public Auto Post([FromBody]Auto auto)
         {
-            return db.Add(animal);
+            return db.Add(auto);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public Animal Put(int id, [FromBody]Animal animal)
+        public Auto Put(int id, [FromBody]Auto auto)
         {
             if (ModelState.IsValid)
             {
-                return db.GetOneByIdAndUpdate(id, animal);
+                return db.GetOneByIdAndUpdate(id, auto);
             }
             return null;
         }
