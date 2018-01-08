@@ -20,7 +20,10 @@ namespace GregsList.Controllers
         [HttpPost("register")]
         public async Task<UserReturnModel> Register([FromBody]RegisterUserModel creds)
         {
-            return _db.Register(creds);
+            if (ModelState.IsValid)
+            {
+                return _db.Register(creds);
+            }
         }
         [HttpPost("login")]
         public async Task<UserReturnModel> Login([FromBody]LoginUserModel creds)
