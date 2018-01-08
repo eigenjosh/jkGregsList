@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using GregsList.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +29,11 @@ namespace GregsList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+           {
+               options.LoginPath = "/Account/Login/";
+               options.Events.OnRedirectToLogin
+           });
             services.AddMvc();
             services.AddTransient<IDbConnection>(x => CreateDBContext());
             services.AddTransient<AnimalRepository>();
@@ -52,7 +58,7 @@ namespace GregsList
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

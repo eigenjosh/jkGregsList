@@ -1,6 +1,7 @@
 using System.Data;
 using Dapper;
 using GregsList.Models;
+using MySql.Data.MySqlClient;
 
 namespace GregsList.Repositories
 {
@@ -34,18 +35,26 @@ namespace GregsList.Repositories
 
             //more sql
             User user = _db.QueryFirstOrDefault<User>(@"
-            SELECT * FROM users WHERE email = @Email
+            SELECT * FROM users WHERE email = @Email OR username = @Username
             ", creds);
-
-            var valid = BCrypt.Net.BCrypt.Verify(creds.Password, user.Password);
-            if (valid)
+            if (user != null)
             {
-                return new UserReturnModel()
+
+                var valid = BCrypt.Net.BCrypt.Verify(creds.Password, user.Password);
+                if (valid)
                 {
-                    Id = user.Id,
-                    Username = user.Username,
-                    Email = user.Email
-                };
+                    return new UserReturnModel()
+                    {
+                        Id = user.Id,
+                        Username = user.Username,
+                        Email = user.Email
+                    };
+                }
+                    catch (MySqlException e)
+                {
+                    System.Console.WriteLine("ERROR: " + e.Message);
+                    return null;
+                }
             }
         }
     }
