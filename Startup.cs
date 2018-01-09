@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using GregsList.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -13,7 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MySql.Data.MySqlClient;
 
-namespace GregsList
+namespace API_Users
 {
     public class Startup
     {
@@ -39,12 +40,10 @@ namespace GregsList
                         return Task.CompletedTask;
                     };
             });
+            
             services.AddMvc();
             services.AddTransient<IDbConnection>(x => CreateDbContext());
             services.AddTransient<UserRepository>();
-            services.AddTransient<AnimalRepository>();
-            services.AddTransient<AutoRepository>();
-            services.AddTransient<PropertyRepository>();
         }
 
         private IDbConnection CreateDbContext()

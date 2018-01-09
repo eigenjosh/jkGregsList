@@ -1,3 +1,4 @@
+using System;
 using System.Data;
 using GregsList.Models;
 using Dapper;
@@ -18,7 +19,6 @@ namespace GregsList.Repositories
             //sql
             try
             {
-
                 int id = _db.ExecuteScalar<int>(@"
                 INSERT INTO users (Username, Email, Password)
                 VALUES (@Username, @Email, @Password);
@@ -50,16 +50,62 @@ namespace GregsList.Repositories
                 var valid = BCrypt.Net.BCrypt.Verify(creds.Password, user.Password);
                 if (valid)
                 {
-                    return new UserReturnModel()
-                    {
-                        Id = user.Id,
-                        Username = user.Username,
-                        Email = user.Email
-                    };
+                    return user.GetReturnModel();
                 }
             }
             return null;
         }
 
+        internal UserReturnModel GetUserByEmail(string email)
+        {
+            User user = _db.QueryFirstOrDefault<User>(@"
+                SELECT * FROM users WHERE email = @Email
+            ", new { email });
+            return user.GetReturnModel();
+        }
+
+        internal UserReturnModel GetUserById(string id)
+        {
+            User savedUser = _db.QueryFirstOrDefault<User>(@"
+            SELECT * FROM users WHERE id = @id
+            ", new { id });
+            return savedUser.GetReturnModel();
+        }
+
+        internal UserReturnModel UpdateUser(UserReturnModel user)
+        {
+            var i = _db.Execute(@"
+                UPDATE users SET
+                    email = @Email,
+                    username = @Username
+                WHERE id = @id
+            ", user);
+            if (i > 0)
+            {
+                return user;
+            }
+            return null;
+
+        }
+
+        internal string ChangeUserPassword(ChangeUserPasswordModel user)
+        {
+            User savedUser = _db.QueryFirstOrDefault<User>(@"
+            SELECT * FROM users WHERE id = @id
+            ", user);
+
+            var valid = BCrypt.Net.BCrypt.Verify(user.OldPassword, savedUser.Password);
+            if (valid)
+            {
+                user.NewPassword = BCrypt.Net.BCrypt.HashPassword(user.NewPassword);
+                var i = _db.Execute(@"
+                    UPDATE users SET
+                        password = @NewPassword
+                    WHERE id = @id
+                ", user);
+                return "Good Job";
+            }
+            return "Umm nope!";
+        }
     }
 }

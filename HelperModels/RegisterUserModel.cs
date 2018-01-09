@@ -6,7 +6,7 @@ namespace GregsList.Models
     {
         [MaxLength(20)]
         public string Username { get; set; }
-        [MaxLength(20), EmailAddress]
+        [MaxLength(255), EmailAddress]
         public string Email { get; set; }
         [MinLength(4)]
         public string Password { get; set; }
