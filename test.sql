@@ -13,12 +13,12 @@
 --     (id)
 --      );
 
-    -- SELECT *
-    -- FROM jkanimals
+-- SELECT *
+-- FROM jkanimals
 
-    -- SELECT *
-    -- FROM jkanimals
-    -- WHERE id = 1 OR id = 2;
+-- SELECT *
+-- FROM jkanimals
+-- WHERE id = 1 OR id = 2;
 
 --     UPDATE jkanimals SET  
 --      description = 'A super old burgercat!';
@@ -95,3 +95,20 @@
 
 -- INSERT INTO jkproperties (Name, Description, Price)
 -- VALUES ('Burgercondo', 'Really old', '450.00');
+-- CREATE TABLE jkusers
+-- (
+--     id int NOT NULL
+--     AUTO_INCREMENT,
+--      username VARCHAR
+--     (255),
+--      email VARCHAR
+--     (255), 
+--      password VARCHAR
+--     (255), 
+--      PRIMARY KEY
+--     (id)
+-- --      );
+--     INSERT INTO jkusers
+--         (username, email, password)
+--     VALUES
+--         ('jaguar', 'j@j.com', 'test');
