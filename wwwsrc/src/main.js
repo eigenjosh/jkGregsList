@@ -3,8 +3,15 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from 'axios'
 
-Vue.config.productionTip = false
+var server = axios.create({baseURL: '//localhost:5000/', timeout:2000, withCredentials: true})
+
+server.get('account/authenticate').then(x=>console.log(x))
+
+server.get("api/values").then(res => {
+  console.log(res)
+}).catch(err=>console.log(err))
 
 /* eslint-disable no-new */
 new Vue({

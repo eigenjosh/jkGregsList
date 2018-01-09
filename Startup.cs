@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MySql.Data.MySqlClient;
 
-namespace API_Users
+namespace GregsList
 {
     public class Startup
     {
