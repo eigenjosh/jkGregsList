@@ -11,7 +11,7 @@ var server = axios.create({
   withCredentials: true
 })
 
-// server.post('account/login', { email: 't@t.com', password: 'test123' }).then(res => {
+// server.post('account/login', { email: 'j@j.com', password: 'test' }).then(res => {
 //   console.log(res)
 // }).catch(er => console.log(er))
 server.get('account/authenticate').then(x => console.log(x))

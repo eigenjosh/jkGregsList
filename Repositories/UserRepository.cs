@@ -69,7 +69,11 @@ namespace GregsList.Repositories
             User savedUser = _db.QueryFirstOrDefault<User>(@"
             SELECT * FROM users WHERE id = @id
             ", new { id });
-            return savedUser.GetReturnModel();
+            if (savedUser != null)
+            {
+                return savedUser.GetReturnModel();
+            }
+            return null;
         }
 
         internal UserReturnModel UpdateUser(UserReturnModel user)

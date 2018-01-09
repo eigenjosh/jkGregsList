@@ -31,17 +31,6 @@ namespace GregsList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy", builder =>
-                {
-                    builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials();
-                });
-            });
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
                 options.LoginPath = "/Account/Login/";
@@ -51,7 +40,20 @@ namespace GregsList
                         return Task.CompletedTask;
                     };
             });
-            services.AddSession();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsDevPolicy", builder =>
+                {
+                    builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+                });
+            });
+
+
             services.AddMvc();
             services.AddTransient<IDbConnection>(x => CreateDbContext());
             services.AddTransient<UserRepository>();
@@ -70,10 +72,12 @@ namespace GregsList
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseCors("CorsPolicy");
+                app.UseCors("CorsDevPolicy");
             }
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
+
             app.UseAuthentication();
             app.UseMvc();
         }

@@ -1,4 +1,3 @@
-
 <template>
     <div class="animal">
         <router-link :to="{name: 'home'}">Return to Home</router-link>
@@ -14,13 +13,13 @@
 
 <script>
     export default {
-        name: 'Animal',
-        data(){
+        name: 'Animals',
+        data() {
             return {
             }
         },
         computed: {
-            animals(){
+            animals() {
                 return this.$store.state.animals
             }
         }
