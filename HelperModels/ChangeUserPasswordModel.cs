@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace API_Users.Models
+namespace GregsList.Models
 {
     public class ChangeUserPasswordModel
     {
