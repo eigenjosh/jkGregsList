@@ -12805,11 +12805,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\source\\codeworks\\csharp\\GregsList\\GregsList.csproj",
+      "projectUniqueName": "c:\\source\\codeworks\\csharp\\GregsList\\GregsList.csproj",
       "projectName": "GregsList",
-      "projectPath": "C:\\source\\codeworks\\csharp\\GregsList\\GregsList.csproj",
+      "projectPath": "c:\\source\\codeworks\\csharp\\GregsList\\GregsList.csproj",
       "packagesPath": "C:\\Users\\joshe\\.nuget\\packages\\",
-      "outputPath": "C:\\source\\codeworks\\csharp\\GregsList\\obj\\",
+      "outputPath": "c:\\source\\codeworks\\csharp\\GregsList\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",

@@ -5,16 +5,15 @@ using System.Linq;
 using GregsList.Models;
 using Dapper;
 using MySql.Data.MySqlClient;
+using GregsList.Controllers;
 
 namespace GregsList.Repositories
 {
-    public class AnimalRepository
+    public class AnimalRepository : DbContext
     {
-        private readonly IDbConnection _db;
 
-        public AnimalRepository(IDbConnection db)
+        public AnimalRepository(IDbConnection db) : base(db)
         {
-            _db = db;
         }
 
         // Find One Find Many add update delete

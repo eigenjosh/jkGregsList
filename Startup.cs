@@ -42,6 +42,9 @@ namespace GregsList
             services.AddMvc();
             services.AddTransient<IDbConnection>(x => CreateDbContext());
             services.AddTransient<UserRepository>();
+            services.AddTransient<AnimalRepository>();
+            services.AddTransient<AutoRepository>();
+            services.AddTransient<PropertyRepository>();
         }
 
         private IDbConnection CreateDbContext()
