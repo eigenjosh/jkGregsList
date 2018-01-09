@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 var store = new Vuex.Store({
     state: {
-        automotives: {
+        autos: {
             'lk34kl4lk234blk23b4bjk': {
                 id: 'lk34kl4lk234blk23b4bjk',
                 make: 'For',

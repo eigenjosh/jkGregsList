@@ -4,7 +4,7 @@
         <div class="animals row">
             <div v-for="animal in animals" class="col-sm-4">
                 <img :src="animal.imgUrl" alt="a animal">
-                <p>Type: {{animal.species}} - {{animal.name}}</p>
+                <p>Type: {{animal.price}} - {{animal.description}}</p>
                 <router-link :to="{name: 'details', params: {animalId: animal.id}}">Description</router-link>
             </div>
         </div>
