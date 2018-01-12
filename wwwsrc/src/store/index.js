@@ -1,48 +1,79 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
+
+let api = axios.create({
+    baseURL: 'http://localhost:5000/api/',
+    timeout: 2000,
+    withCredentials: true
+})
+
+let auth = axios.create({
+    baseURL: 'http://localhost:5000/',
+    timeout: 2000,
+    withCredentials: true
+})
 
 Vue.use(Vuex)
 
 var store = new Vuex.Store({
     state: {
-        autos: {
-            'lk34kl4lk234blk23b4bjk': {
-                id: 'lk34kl4lk234blk23b4bjk',
-                make: 'For',
-                model: 'Mustard',
-                color: 'grey poupon',
-                description: 'Do you have this car? Its grey poupon get it!!!',
-                imgUrl: 'http://loremflickr.com/200/200/car'
-            },
-            'lk34kwsefdceev234blk23b4bjk': {
-                id: 'lk34kwsefdceev234blk23b4bjk',
-                make: 'Cevy',
-                model: 'Oregon',
-                color: 'Tree',
-                description: "Smells of coffee and beard oil",
-                imgUrl: 'http://loremflickr.com/200/200/car'
-            },
-            'lk34kl4lk235sef541b4125bjk': {
-                id: 'lk34kl4lk235sef541b4125bjk',
-                make: 'Doge',
-                model: 'Bark',
-                color: 'Much Happy',
-                description: "Such speed, fastness, wow!",
-                imgUrl: 'http://loremflickr.com/200/200/car'
-            }
-
-        },
         animals: {
-            'cat': {
-                Id: 'cat1',
-                Name: 'felix',
-                Description: 'attacks anything that moves',
-                Price: 'free'
-            }
+        },
+        autos: {
+        },
+        properties: {
         }
     },
-    mutations: {},
-    actions: {}
+    mutations: {
+        setAnimals(state, data) {
+            state.animals = data
+        },
+        handleError(state, err) {
+            state.error = err
+        }
+    },
+    actions: {
+        getAnimals({ commit, dispatch }) {
+            api('animals')
+                .then(data => {
+                    commit('setAnimals', data)
+                })
+                .catch(err => {
+                    commit('handleError', err)
+                })
+        },
+        getBoard({ commit, dispatch }, id) {
+            api('boards/' + id)
+                .then(x => {
+                    commit('setActiveBoard', x)
+                })
+                .catch(err => {
+                    commit('handleError', err)
+                })
+        },
+        createBoard({ commit, dispatch }, board) {
+            api.post('boards/', board)
+                .then(x => {
+                    dispatch('getBoards')
+                })
+                .catch(err => {
+                    commit('handleError', err)
+                })
+        },
+        removeBoard({ commit, dispatch }, board) {
+            api.delete('boards/' + board._id)
+                .then(x => {
+                    this.getBoards()
+                })
+                .catch(err => {
+                    commit('handleError', err)
+                })
+        },
+        handleError({ commit, dispatch }, err) {
+            commit('handleError', err)
+        }
+    }
 })
 
 export default store
